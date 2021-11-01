@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="Keep Team">
+    
+    <title>
+        
+            Hadoop集群搭建 |
+        
+        Keep Theme
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.svg">
+    
+<link rel="stylesheet" href="/css/font-awesome.min.css">
+
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"example.com","root":"/","language":"en","path":"search.xml"};
+    KEEP.theme_config = {"toc":{"enable":false,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"/images/avatar.svg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":false,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":false}}},"local_search":{"enable":false,"preload":false},"code_copy":{"enable":false,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.3"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+<meta name="generator" content="Hexo 5.4.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                Keep Theme
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                HOME
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                ARCHIVES
+                            </a>
+                        </li>
+                    
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">ARCHIVES</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">Hadoop集群搭建</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.svg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Keep Team</span>
+                        
+                            <span class="author-label">Lv1</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2021-11-01 20:00:26
+    </span>
+    
+    
+
+    
+    
+    
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h1 id="Hadoop集群搭建（分布式版本）"><a href="#Hadoop集群搭建（分布式版本）" class="headerlink" title="Hadoop集群搭建（分布式版本）"></a>Hadoop集群搭建（分布式版本）</h1><h3 id="一、准备工作"><a href="#一、准备工作" class="headerlink" title="一、准备工作"></a>一、准备工作</h3><ul>
+<li><p>三台虚拟机：master、node1、node2</p>
+</li>
+<li><p>时间同步</p>
+</li>
+<li><p>jdk1.8</p>
+<pre><code>java -version
+</code></pre>
+</li>
+<li><p>修改主机名</p>
+<pre><code>三台分别执行 vim /etc/hostname 并将内容指定为对应的主机名
+</code></pre>
+</li>
+<li><p>关闭防火墙：systemctl stop firewalld   </p>
+<ul>
+<li>查看防火墙状态：systemctl status firewalld </li>
+<li>取消防火墙自启：systemctl disable firewalld</li>
+</ul>
+</li>
+<li><p>静态IP配置</p>
+<ul>
+<li><p>直接使用图形化界面配置（不推荐）</p>
+</li>
+<li><p>手动编辑配置文件进行配置</p>
+<pre><code>1、编辑网络配置文件
+vim /etc/sysconfig/network-scripts/ifcfg-ens33
+
+TYPE=Ethernet
+BOOTPROTO=static
+HWADDR=00:0C:29:E2:B8:F2
+NAME=ens33
+DEVICE=ens33
+ONBOOT=yes
+IPADDR=192.168.190.100
+GATEWAY=192.168.190.2
+NETMASK=255.255.255.0
+DNS1=192.168.190.2
+DNS2=223.6.6.6
+
+需要修改：HWADDR（mac地址）
+        IPADDR（根据自己的网段，自定义IP地址）
+        GATEWAY（根据自己的网段填写对应的网关地址）
+
+2、关闭NetworkManager，并取消开机自启
+systemctl stop NetworkManager
+systemctl disable NetworkManager
+
+3、重启网络服务
+systemctl restart network
+</code></pre>
+</li>
+</ul>
+</li>
+<li><p>免密登录</p>
+<pre><code># 1、生成密钥
+ssh-keygen -t rsa
+# 2、配置免密登录
+ssh-copy-id master
+ssh-copy-id node1
+ssh-copy-id node2
+# 3、测试免密登录
+ssh node1
+</code></pre>
+</li>
+<li><p>配置好映射文件：/etc/hosts</p>
+<pre><code>192.168.190.100 master
+192.168.190.101 node1
+192.168.190.102 node2
+</code></pre>
+</li>
+</ul>
+<h3 id="二、搭建Hadoop集群"><a href="#二、搭建Hadoop集群" class="headerlink" title="二、搭建Hadoop集群"></a>二、搭建Hadoop集群</h3><h4 id="1、上传安装包并解压"><a href="#1、上传安装包并解压" class="headerlink" title="1、上传安装包并解压"></a>1、上传安装包并解压</h4><pre><code># 使用xftp上传压缩包至master的/usr/local/soft/packages/
+cd /urs/local/soft/packages/
+# 解压
+tar -zxvf hadoop-2.7.6.tar.gz -C /usr/local/soft/
+</code></pre>
+<h4 id="2、配置环境变量"><a href="#2、配置环境变量" class="headerlink" title="2、配置环境变量"></a>2、配置环境变量</h4><pre><code>vim /etc/profile
+
+JAVA_HOME=/usr/local/soft/jdk1.8.0_171
+HADOOP_HOME=/usr/local/soft/hadoop-2.7.6
+export PATH=$JAVA_HOME/bin:$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$PATH
+
+# 重新加载环境变量
+source /etc/profile
+</code></pre>
+<h4 id="3、修改Hadoop配置文件"><a href="#3、修改Hadoop配置文件" class="headerlink" title="3、修改Hadoop配置文件"></a>3、修改Hadoop配置文件</h4><ul>
+<li><p><code>cd /usr/local/soft/hadoop-2.7.6/etc/hadoop/</code></p>
+</li>
+<li><p>core-site.xml</p>
+<pre><code>    &lt;property&gt;
+        &lt;name&gt;fs.defaultFS&lt;/name&gt;
+        &lt;value&gt;hdfs://master:9000&lt;/value&gt;
+    &lt;/property&gt;
+
+    &lt;property&gt;
+        &lt;name&gt;hadoop.tmp.dir&lt;/name&gt;
+        &lt;value&gt;/usr/local/soft/hadoop-2.7.6/tmp&lt;/value&gt;
+    &lt;/property&gt;
+
+    &lt;property&gt;
+        &lt;name&gt;fs.trash.interval&lt;/name&gt;
+        &lt;value&gt;1440&lt;/value&gt;
+    &lt;/property&gt;
+</code></pre>
+</li>
+<li><p>hadoop-env.sh</p>
+<pre><code>export JAVA_HOME=/usr/local/soft/jdk1.8.0_171
+</code></pre>
+<p>  <img src="https://i.loli.net/2021/08/28/qK2xyvaTzRl6CSb.png" alt="image.png"></p>
+</li>
+<li><p>hdfs-site.xml</p>
+<pre><code>    &lt;property&gt;        &lt;name&gt;dfs.replication&lt;/name&gt;        &lt;value&gt;1&lt;/value&gt;    &lt;/property&gt;    &lt;property&gt;        &lt;name&gt;dfs.permissions&lt;/name&gt;        &lt;value&gt;false&lt;/value&gt;    &lt;/property&gt;
+</code></pre>
+</li>
+<li><p>mapred-site.xml.template</p>
+<pre><code># 1、重命名文件cp mapred-site.xml.template mapred-site.xml# 2、修改    &lt;property&gt;        &lt;name&gt;mapreduce.framework.name&lt;/name&gt;        &lt;value&gt;yarn&lt;/value&gt;    &lt;/property&gt;    &lt;property&gt;          &lt;name&gt;mapreduce.jobhistory.address&lt;/name&gt;          &lt;value&gt;master:10020&lt;/value&gt;      &lt;/property&gt;      &lt;property&gt;          &lt;name&gt;mapreduce.jobhistory.webapp.address&lt;/name&gt;          &lt;value&gt;master:19888&lt;/value&gt;      &lt;/property&gt; 
+</code></pre>
+</li>
+<li><p>slaves</p>
+<pre><code>node1node2
+</code></pre>
+</li>
+<li><p>yarn-site.xml</p>
+<pre><code>    &lt;property&gt;        &lt;name&gt;yarn.resourcemanager.hostname&lt;/name&gt;        &lt;value&gt;master&lt;/value&gt;    &lt;/property&gt;    &lt;property&gt;        &lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;        &lt;value&gt;mapreduce_shuffle&lt;/value&gt;    &lt;/property&gt;    &lt;property&gt;        &lt;name&gt;yarn.log-aggregation-enable&lt;/name&gt;        &lt;value&gt;true&lt;/value&gt;    &lt;/property&gt;    &lt;property&gt;        &lt;name&gt;yarn.log-aggregation.retain-seconds&lt;/name&gt;        &lt;value&gt;604800&lt;/value&gt;    &lt;/property&gt;
+</code></pre>
+</li>
+</ul>
+<h4 id="4、分发Hadoop到node1、node2"><a href="#4、分发Hadoop到node1、node2" class="headerlink" title="4、分发Hadoop到node1、node2"></a>4、分发Hadoop到node1、node2</h4><pre><code>cd /usr/local/soft/scp -r hadoop-2.7.6/ node1:`pwd`scp -r hadoop-2.7.6/ node2:`pwd`
+</code></pre>
+<h4 id="5、格式化namenode（第一次启动的时候需要执行）"><a href="#5、格式化namenode（第一次启动的时候需要执行）" class="headerlink" title="5、格式化namenode（第一次启动的时候需要执行）"></a>5、格式化namenode（第一次启动的时候需要执行）</h4><pre><code>hdfs namenode -format
+</code></pre>
+<p><img src="https://i.loli.net/2021/08/28/MvQCsFRbuxnwoY7.png" alt="image.png"></p>
+<h4 id="6、启动Hadoop集群"><a href="#6、启动Hadoop集群" class="headerlink" title="6、启动Hadoop集群"></a>6、启动Hadoop集群</h4><pre><code>start-all.sh
+</code></pre>
+<h4 id="7、检查master、node1、node2上的进程"><a href="#7、检查master、node1、node2上的进程" class="headerlink" title="7、检查master、node1、node2上的进程"></a>7、检查master、node1、node2上的进程</h4><ul>
+<li><p>master：</p>
+<pre><code>[root@master soft]# jps2597 NameNode2793 SecondaryNameNode2953 ResourceManager3215 Jps
+</code></pre>
+</li>
+<li><p>node1：</p>
+<pre><code>[root@node1 jdk1.8.0_171]# jps11361 DataNode11459 NodeManager11559 Jps
+</code></pre>
+</li>
+<li><p>node2：</p>
+<pre><code>[root@node2 ~]# jps11384 DataNode11482 NodeManager11582 Jps
+</code></pre>
+</li>
+</ul>
+<h4 id="8、访问HDFS的WEB界面"><a href="#8、访问HDFS的WEB界面" class="headerlink" title="8、访问HDFS的WEB界面"></a>8、访问HDFS的WEB界面</h4><pre><code>http://master:50070
+</code></pre>
+<p><img src="https://i.loli.net/2021/08/28/hpP8laUgtBbFyY5.png" alt="image.png"></p>
+<h4 id="9、访问YARN的WEB界面"><a href="#9、访问YARN的WEB界面" class="headerlink" title="9、访问YARN的WEB界面"></a>9、访问YARN的WEB界面</h4><pre><code>http://master:8088
+</code></pre>
+<p><img src="https://i.loli.net/2021/08/28/yrVSEs3MqbDAn2v.png" alt="image.png"></p>
+
+        </div>
+
+        
+
+        
+            <div class="article-nav">
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2021/10/30/hello-world/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Hello World</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span>
+              -
+            
+            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Keep Team</a>
+        </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.3</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="fas fa-arrow-up"></i>
+            </li>
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+</main>
+
+
+
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/header-shrink.js"></script>
+
+<script src="/js/back2top.js"></script>
+
+<script src="/js/dark-light-toggle.js"></script>
+
+
+
+
+
+
+
+
+<div class="post-scripts">
+    
+</div>
+
+
+
+</body>
+</html>
