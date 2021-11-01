@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="Keep Team">
+    
+    <title>
+        
+            Hive 相关流程 |
+        
+        Keep Theme
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.svg">
+    
+<link rel="stylesheet" href="/css/font-awesome.min.css">
+
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"example.com","root":"/","language":"en","path":"search.xml"};
+    KEEP.theme_config = {"toc":{"enable":false,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"/images/avatar.svg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":false,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":false}}},"local_search":{"enable":false,"preload":false},"code_copy":{"enable":false,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.3"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+<meta name="generator" content="Hexo 5.4.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                Keep Theme
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                HOME
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                ARCHIVES
+                            </a>
+                        </li>
+                    
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">ARCHIVES</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">Hive 相关流程</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.svg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Keep Team</span>
+                        
+                            <span class="author-label">Lv1</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2021-11-01 20:16:55
+    </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/blog/">blog</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/hexo/">hexo</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h1 id="Hive流程"><a href="#Hive流程" class="headerlink" title="Hive流程"></a>Hive流程</h1><p>[toc]</p>
+<h3 id="Hive与传统数据库对比"><a href="#Hive与传统数据库对比" class="headerlink" title="Hive与传统数据库对比"></a>Hive与传统数据库对比</h3><p>​    @ 版本号：Hive1.2.1<br>​    0.13和0.14版本稳定版本，不支持但是不支持更新删除操作。<br>​    1.2.1和1.2.2稳定版本，为Hive2版本(主流版本)<br>​    1.2.1的程序只能连接hive1.2.1 的 hiveserver2</p>
+<h3 id="Hadoop简介"><a href="#Hadoop简介" class="headerlink" title="Hadoop简介"></a>Hadoop简介</h3><p>Hadoop是一个开源框架，用于在分布式环境中存储和处理大数据。它包含两个模块，一个是MapReduce，另一个是Hadoop分布式文件系统(HDFS).<br>        <strong>·MapReduce</strong>: 这是一个并行编程模型，用于在大型商用硬件上处理大量机构化，半结构化和非结构化数据。<br>        <strong>·HDFS</strong>: Hadoop分布式文件系统是Hadoop框架的一部分，用于存储和处理数据集。它提供了一个容错文件系统在商品硬件上运行。<br>Hadoop生态系统包含不同的子项目(工具), 例如用于帮助Hadoop模块的Sqoop， Pig和Hive。<br>        <strong>·Sqoop</strong>: 它用于在HDFS和RDBMS之间导入和导出数据<br>        <strong>·Pig</strong>: 这是一个用于MapReduce操作开发脚本的过程语言平台<br>        <strong>·Hive</strong>: 它是一个用来开发SQL类型脚本来执行MapReduce操作的平台<br><strong>注意：</strong> 有多种方法可以执行MapReduce操作：</p>
+<p>​        <strong>·</strong> 使用Java MapReduce程序的传统方法用于结构化，半结构化和非结构化数据<br>​        <strong>·</strong> MapReduce使用Pig处理结构化和半结构化数据的脚本方法<br>​        <strong>·</strong> Hive查询语言(HiveQl或HQL) 用于MapReduce使用Hive处理结构化数据</p>
+<h3 id="1-为什么使用Hive"><a href="#1-为什么使用Hive" class="headerlink" title="1.为什么使用Hive"></a>1.为什么使用Hive</h3><p>  “大数据”一词用于包含巨大数据量，高速度以及日益增多的各种数据的大型数据集。使用传统的数据管理系统，处理大数据很困难。因此，Apache Software Foundation引入了一个名为Hadoop的框架来解决大数据管理和处理难题。<br>  而仅仅在使用Hadoop时，您必须编写复杂的 <strong>Map-Reduce</strong> 作业，但现在在 Hive 的帮助下，您只需要提交<strong>SQL</strong>查询即可。Hive 主要面向熟悉 SQL 的用户。Hive 抽象了 Hadoop 的复杂性。需要注意的主要事情是Hive不需要学习java。Hive 使用称为<strong>HiveQL</strong> (HQL) 的语言，它类似于 SQL。HiveQL 自动将类似 SQL 的查询转换为 MapReduce 作业。</p>
+<h3 id="2-Hive是什么"><a href="#2-Hive是什么" class="headerlink" title="2.Hive是什么"></a>2.Hive是什么</h3><p>  Hive是建立在Hadoop上的数据仓库基础构架。它提供了一系列的工具，可以用来进行数据<strong>提取转化加载(ETL)<strong>，这是一种可以存储、插叙你和分析存储在Hadoop中的大规模数据的机制。Hive定义了简单的 类SQL查询语言，称为HQL，它允许熟悉SQL的用户查询数据。同时，这个语言也允许熟悉MapReduce开发者 的开发自定义的mapper和reducer来处理内建的mapper和reducer 无法完成的复杂的分析工作。<br>  数据仓库，英文名称为Dat a Warehouse，可以简写</strong>DW</strong>或<strong>DWH</strong>。数据仓库，是为企业所有级别的决策制定过程，提供所有类型数据支持的战略集合。它用于分析性报告和决策支持目的而创建。为需要业务智能的企业，提供指导业务流程改进、监视时间、成本、质量以及控制。</p>
+<h3 id="3-Hive具体内容"><a href="#3-Hive具体内容" class="headerlink" title="3.Hive具体内容"></a>3.Hive具体内容</h3><ol>
+<li>  查询语言：类SQL的查询语言HQL。熟悉SQL开发的开发者可以很方便使用Hive进行开发。</li>
+<li>  数据存储位置：所有Hive的数据都是存储在HDFS中的。而数据库则可以将数据保存在块设备中或者本地文件系统中。</li>
+<li>  数据格式。 Hive中没有定有专门的数据格式。而在数据库中，所有数据都会按照一定的组织存储，因此，数据库加载数据的过程会比较耗时。</li>
+<li>  数据更新。 Hive堆数据的改写和添加比较弱化，0.14版本之后支持，需要启动配置项。而数据库中的数据通常是需要经常进行修改的。</li>
+<li>  索引。Hive在加载数据的过程中不会对数据进行任何处理。因此访问延迟较高。数据库可以有很高的效率。较低的延迟。由于数据的访问延迟较高，决定了Hive不适合在线数据查询。</li>
+<li>  执行计算。Hive中执行是通过MapReduce来实现的而数据库通常有自己的执行引擎。</li>
+<li>  数据规模。由于HIve建立在集群上并可以利用MapReduce进行并行计算，因此可以支持很大规模的数据；对应的，数据库可以支持的数据规模较小。 </li>
+</ol>
+<h3 id="4-Hive的存储格式"><a href="#4-Hive的存储格式" class="headerlink" title="4.Hive的存储格式"></a>4.Hive的存储格式</h3><blockquote>
+<p>  Hive会为每个创建的数据在HDFS上创建一个目录，该数据库的表会以子目录形式存储，表中的数据会以表目录下的文件形式存储。对于default数据库，默认的缺省数据库没有自己的目录，default数据库下的表默认存放在/usr/hive/warehouse目录下</p>
+</blockquote>
+<p>  Hive的数据存储基于Hadoop HDFS。<br>  Hive的没有专门的数据文件格式，常见的有以下几种。</p>
+<ol>
+<li><p>  TEXTFILE 为默认格式，存储方式为行存储。数据不做压缩，磁盘开销大，数据解析开销大。</p>
+</li>
+<li><p>SEQUENCEFILE  是Hadoop API提供的一种二进制文件支持，其具有使用方便、可分割、可压缩的特点。</p>
+<p>  <strong>三种压缩</strong>选择: NONE，RECORD，BLOCK。 Record压缩率低，一般建议使用BLOCK压缩</p>
+</li>
+<li><p>  AVRO</p>
+</li>
+<li><p>  RCFILE 一种行列存储相结合的存储方式。</p>
+</li>
+<li><p>  ORCFILE 数据按照行分块，每个块按照列存储，其中每个块都存储有一个索引。hive给出的新格式，属于RCFILE的升级版，性能有大幅度提升，而且数据可以压缩存储，压缩快 快速列存取</p>
+</li>
+<li><p>  PARQUET 也是一种行式存储，同时具有很好的压缩性能;同时可以减少大量的表扫描和反序列化的时间。</p>
+</li>
+</ol>
+<p><strong>存储效率及执行速度对比</strong></p>
+<p><img src="https://i.loli.net/2021/09/12/k91vMc7w2iZjtSV.png" alt="image.png"></p>
+<p><strong>读取操作效率对比</strong></p>
+<p><img src="https://i.loli.net/2021/09/12/po1MdeSrZw5KPhO.png" alt="image.png"></p>
+<h3 id="5-Hive的重要特性"><a href="#5-Hive的重要特性" class="headerlink" title="5.Hive的重要特性"></a>5.Hive的重要特性</h3><blockquote>
+<p>  · 在Hive中，首先创建表和数据库，然后将数据加载到这些表中。<br>  · Hive作为数据仓库，设计用于仅管理和查询存储在表中的结构化数据。<br>  · 在处理结构化数据时， Map Reduce没有像UDF那样的优化和可用性功能，但Hive框架有。查询优化是指在性能方面的一种有效的查询执行方式。<br>  · Hive的受SQL启发的语言将用户与MapReduce编程的复杂性分开。它重用了关系数据库中熟悉的概念，例如表、行、列和模式等，以便于学习。<br>  · Hadoop的编程适用于平面文件。因此，Hive可以使用目录结构对数据机型”分区”,以提高某些 查询性能。<br>  · Hive的一个新的重要组件，即用于存储架构信息的Metastore。此metastore通常驻留在关系数据库中。我们可以使用以下方法与Hive进行交互<br>          · <strong>Web GUI</strong><br>          · <strong>Java 数据库(JDBC)接口</strong><br>  · 大多数交互往往通过命令行界面(CLI)进行。Hive提供了一个CLI来使用Hive查询语言（HQL）编写Hive查询<br>  · 通常，HQL语言类似于大多数数据分析师熟悉的SQL语法。下面的示例查询显示提到的表名中存在的所有记录<br>          · <strong>示例查询：</strong>Select * from <TableName><br>  · <code> Hive支持四种文件格式，即TEXTFILE、SEQUENCFILE、ORC和RCFILE（记录列文件）。</code><br>  ·<code>对于单用户元数据存储，Hive使用derby数据库，对于多用户元数据或共享元数据情况，Hive使用MYSQL。</code></p>
+</blockquote>
+<p>关于Hive的一些关键点：</p>
+<pre><code>· HQL和SQL的主要区别在于Hive查询在Hadoop的基础架构上执行，而不是在传统数据上执行。
+· Hive查询执行将类似于一系列自动生成的mapreduce作业。 
+· Hive支持分区和桶概念，一边在客户端执行查询时轻松检索数据。
+· Hive支持自定义特定的UDF(用户定义函数) 用于数据清理、过滤等。根据程序员的要求可以定义Hive UDF。
+</code></pre>
+<p><strong>Hive和关系数据之间的一些主要区别</strong></p>
+<pre><code>  关系数据库是“读模式和写模式”。首先创建一个表，然后将数据插入到特定的表。在关系数据表上，可以执行插入、更新和修改等功能。
+  Hive是“只读模式”。因此，更新、修改都能功能不适用于此。因为典型集群中的Hive查询运行在多个数据节点上。所以无法跨多个节点更新和修改数据。（0.13以下的Hive版本）
+  此外，Hivb支持”READ Many WRITE Once“模式。意味着在插入表后，我们可以在最新的Hive版本中更新表。
+  之一：但是新版本Hive带有更新的功能。Hive版本（Hive 0.14）提供了更新和删除选项作为新功能
+</code></pre>
+<p> <strong>Hive结构</strong></p>
+<p><img src="https://i.loli.net/2021/09/12/qgtZQCsB5VGNm34.png" alt="蜂巢结构"></p>
+<h3 id="6-Hive操作客户端"><a href="#6-Hive操作客户端" class="headerlink" title="6.Hive操作客户端"></a>6.Hive操作客户端</h3><blockquote>
+<pre><code>常用的2个：CLI，JDBC/ODBC
+</code></pre>
+</blockquote>
+<pre><code>· CLI, 即Shell命令行
+· JDBC/ODBC 是Hive的Java， 与使用传统数据库JDBC的方式类似。
+· Hive将元数据存储在数据库中(metastyore), 目前只支持mysql、derby。
+· Hive中的元数据包括表的名字，表的列和分区及其属性，表的属性（是否为外部表等），表的数据所在目录等；由解释器、编译器、优化器完成HQL查询语句，从此法分析、语法分析、编译、优化以及查询计划（破烂）的生成。生成的查询计划存储在HDFS中，并在随后由MapReduce调用执行。
+· Hive的数据存储在HDFS中，大部分的查询由MapReduce完成（包含*的查询，比如select * from table 不会生成MapReduce任务
+</code></pre>
+<h3 id="7-Hive的Metastore"><a href="#7-Hive的Metastore" class="headerlink" title="7.Hive的Metastore"></a>7.Hive的Metastore</h3><blockquote>
+<p>  · metastore是hive元数据的集中存放地<br>  · metastore默认使用内嵌的derby数据库作为存储引擎<br>  · Derby引擎的缺点：一次只能打开一个会话<br>  · 使用MySQL作为外置存储引擎，多用户同时访问<br>  · 元数据详解见：查看mysql SDS表和TBLS表 –&gt; <a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/haozhugogo/article/details/73274832" >元数据详解啦<i class="fas fa-external-link-alt"></i></a></p>
+</blockquote>
+<p><strong>Hive 存储和计算：</strong></p>
+<p>Meta存储、文件系统、Job Client等Hive服务依次与Hive存储通信并执行以下操作<br>    · 在Hive中创建的表的元数据存储在Hive”元存储数据库“中。<br>    · 查询结果和加载到表中的数据将存储在HDFS上的Hadoop集群中。 </p>
+<h3 id="job执行流程"><a href="#job执行流程" class="headerlink" title="job执行流程"></a>job执行流程</h3><p><img src="https://i.loli.net/2021/09/12/IPzMHBxSm2hvD9L.png" alt="作业执行流程"></p>
+<p><strong>Hive中的数据流按以下模式运行：</strong></p>
+<pre><code>从UI（用户界面）或interface（接口）执行查询
+驱动程序正在与Compiler交互以获取计划。（这里的计划是指查询执询）流程及其相关元数据信息的收集
+编译器为要执行的作业创建计划。编译器与Meta存储通信以获取元数据请求
+元存储将元数据信息发回编译器
+编译器与驱动程序通信并提出执行查询的计划
+驱动程序将执行计划发送到执行引擎
+执行引擎（EE）充当Hive和Hadoop之间的桥梁来处理查询。用于DFS操作。
+从驱动获取结果
+将结果发送到执行引擎。一旦从数据节点获取结果到EE，它就会将结果发送回驱动程序和UI或interface（接口）
+</code></pre>
+<p>我们将第七步拿出来详解</p>
+<blockquote>
+<ol start="7">
+<li><strong>DFS操作</strong>：<br>  · EE应首先联系Name Node，然后联系Data节点以获取存储在表中的值。<br>  · EE将从数据节点获取所需的记录。表的实际数据仅驻留在数据节点中。而从名称节点，它只获取查询的元数据信息<br>  · 它从与提到的查询相关的数据节点收集实际数据<br>  · 执行引擎（EE）与Hive中存在的原存储进行双向操作。以执行DDL（数据定义语言）操作。这里完成了CREATE、DROP和ALTERING表和数据库等DDL操作。原存储有关数据库名称、表名称和列名称的信息。它将获取与提到的查询有关的数据。<br>  · 执行引擎（EE）反过来与Hadoop守护进程（例如 Name node、 Data node和Job tracker）通信以在Hadoop文件系统之上执行查询</li>
+</ol>
+</blockquote>
+<h3 id="8-Hive基础建表语法和加载数据"><a href="#8-Hive基础建表语法和加载数据" class="headerlink" title="8.Hive基础建表语法和加载数据"></a>8.Hive基础建表语法和加载数据</h3><h4 id="Hive建表"><a href="#Hive建表" class="headerlink" title="Hive建表"></a>Hive建表</h4><pre><code>CREATE [EXTERNAL] TABLE [IF NOT EXISTS] table_name
+  // 定义字段名，字段类型
+  [(col_name data_type [COMMENT col_comment], ...)]
+  // 给表加上注解
+  [COMMENT table_comment]
+  // 分区
+  [PARTITIONED BY (col_name data_type [COMMENT col_comment], ...)]
+  // 分桶
+  [CLUSTERED BY (col_name, col_name, ...) 
+  // 设置排序字段 升序、降序
+  [SORTED BY (col_name [ASC|DESC], ...)] INTO num_buckets BUCKETS]
+  [
+      // 指定设置行、列分隔符 
+   [ROW FORMAT row_format] 
+   // 指定Hive储存格式：textFile、rcFile、SequenceFile 默认为：textFile
+   [STORED AS file_format]
+   
+   | STORED BY &#39;storage.handler.class.name&#39; [ WITH SERDEPROPERTIES (...) ]  (Note:  only available starting with 0.6.0)
+  ]
+  // 指定储存位置
+  [LOCATION hdfs_path]
+  // 跟外部表配合使用，比如：映射HBase表，然后可以使用HQL对hbase数据进行查询，当然速度比较慢
+  [TBLPROPERTIES (property_name=property_value, ...)]  (Note:  only available starting with 0.6.0)
+  [AS select_statement]  (Note: this feature is only available starting with 0.5.0.)
+</code></pre>
+<h5 id="建表1：全部使用默认建表方式"><a href="#建表1：全部使用默认建表方式" class="headerlink" title="建表1：全部使用默认建表方式"></a>建表1：全部使用默认建表方式</h5><pre><code>create table students
+(
+    id bigint,
+    name string,
+    age int,
+    gender string,
+    clazz string
+)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY &#39;,&#39;; // 必选，指定列分隔符 
+</code></pre>
+<h5 id="建表2：指定location-（这种方式也比较常用）"><a href="#建表2：指定location-（这种方式也比较常用）" class="headerlink" title="建表2：指定location （这种方式也比较常用）"></a>建表2：指定location （这种方式也比较常用）</h5><pre><code>create table students2
+(
+    id bigint,
+    name string,
+    age int,
+    gender string,
+    clazz string
+)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY &#39;,&#39;
+LOCATION &#39;/input1&#39;; // 指定Hive表的数据的存储位置，一般在数据已经上传到HDFS，想要直接使用，会指定Location，通常Locaion会跟外部表一起使用，内部表一般使用默认的location
+</code></pre>
+<h5 id="建表3：指定存储格式"><a href="#建表3：指定存储格式" class="headerlink" title="建表3：指定存储格式"></a>建表3：指定存储格式</h5><pre><code>create table students3
+(
+    id bigint,
+    name string,
+    age int,
+    gender string,
+    clazz string
+)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY &#39;,&#39;
+STORED AS rcfile; // 指定储存格式为rcfile，inputFormat:RCFileInputFormat,outputFormat:RCFileOutputFormat，如果不指定，默认为textfile，注意：除textfile以外，其他的存储格式的数据都不能直接加载，需要使用从表加载的方式。
+</code></pre>
+<h5 id="建表4：create-table-xxxx-as-select-statement-SQL语句-这种方式比较常用"><a href="#建表4：create-table-xxxx-as-select-statement-SQL语句-这种方式比较常用" class="headerlink" title="建表4：create table xxxx as select_statement(SQL语句) (这种方式比较常用)"></a>建表4：create table xxxx as select_statement(SQL语句) (这种方式比较常用)</h5><pre><code>create table students4 as select * from students2;
+</code></pre>
+<h5 id="建表5：create-table-xxxx-like-table-name-只想建表，不需要加载数据"><a href="#建表5：create-table-xxxx-like-table-name-只想建表，不需要加载数据" class="headerlink" title="建表5：create table xxxx like table_name  只想建表，不需要加载数据"></a>建表5：create table xxxx like table_name  只想建表，不需要加载数据</h5><pre><code>create table students5 like students;
+</code></pre>
+<h4 id="Hive加载数据"><a href="#Hive加载数据" class="headerlink" title="Hive加载数据"></a>Hive加载数据</h4><h5 id="1、使用hdfs-dfs-put-39-本地数据-39-39-hive表对应的HDFS目录下-39"><a href="#1、使用hdfs-dfs-put-39-本地数据-39-39-hive表对应的HDFS目录下-39" class="headerlink" title="1、使用hdfs dfs -put &#39;本地数据&#39; &#39;hive表对应的HDFS目录下&#39;"></a>1、使用<code>hdfs dfs -put &#39;本地数据&#39; &#39;hive表对应的HDFS目录下&#39;</code></h5><h5 id="2、使用-load-data-inpath"><a href="#2、使用-load-data-inpath" class="headerlink" title="2、使用 load data inpath"></a>2、使用 load data inpath</h5><blockquote>
+<p>下列命令需要在hive shell里执行</p>
+</blockquote>
+<pre><code>// 将HDFS上的/input1目录下面的数据 移动至 students表对应的HDFS目录下，注意是 移动、移动、移动load data inpath &#39;/input1/students.txt&#39; into table students;
+</code></pre>
+<pre><code>// 清空表truncate table students;// 加上 local 关键字 可以将Linux本地目录下的文件 上传到 hive表对应HDFS 目录下 原文件不会被删除load data local inpath &#39;/usr/local/soft/data/students.txt&#39; into table students;// overwrite 覆盖加载load data local inpath &#39;/usr/local/soft/data/students.txt&#39; overwrite into table students;
+</code></pre>
+<h5 id="3、create-table-xxx-as-SQL语句"><a href="#3、create-table-xxx-as-SQL语句" class="headerlink" title="3、create table xxx as SQL语句"></a>3、create table xxx as SQL语句</h5><h5 id="4、insert-into-table-xxxx-SQL语句-（没有as）"><a href="#4、insert-into-table-xxxx-SQL语句-（没有as）" class="headerlink" title="4、insert into table xxxx SQL语句 （没有as）"></a>4、insert into table xxxx SQL语句 （没有as）</h5><pre><code>// 将 students表的数据插入到students2 这是复制 不是移动 students表中的表中的数据不会丢失insert into table students2 select * from students;// 覆盖插入 把into 换成 overwriteinsert overwrite table students2 select * from students;
+</code></pre>
+<h3 id="Hive的分区与分桶"><a href="#Hive的分区与分桶" class="headerlink" title=".Hive的分区与分桶"></a>.Hive的分区与分桶</h3><h3 id="数据倾斜-长尾效应-问题剖析"><a href="#数据倾斜-长尾效应-问题剖析" class="headerlink" title=".数据倾斜(长尾效应)问题剖析"></a>.数据倾斜(长尾效应)问题剖析</h3><blockquote>
+<p>  在解决数据倾斜问题之前，还要再提一句：没有瓶颈时谈论优化都是自寻烦恼</p>
+</blockquote>
+<p>​    在map和reduce两个阶段中，最容易出现数据倾斜的就是reduce阶段，因为map到reduce会经过shuffle阶段，在shuffle中默认会按照key进行hash，<strong>如果相同的key过多，就会hash的结果就是大量相同的key进入到同一个reduce中</strong>，导致数据倾斜。</p>
+<p>现象：99%的reduce任务都执行完成，就差某个reduce任务执行不完</p>
+<h3 id="数据倾斜解决方案"><a href="#数据倾斜解决方案" class="headerlink" title=".数据倾斜解决方案"></a>.数据倾斜解决方案</h3><blockquote>
+<pre><code>MapReduce和Spark中的数据倾斜解决方案原理时类似的，一下讨论Hive使用MapReduce引擎引发的数据倾斜，Spark数据倾斜也可以此为参照。(长尾效应)
+</code></pre>
+</blockquote>
+<h4 id="1-空值引发的数据倾斜"><a href="#1-空值引发的数据倾斜" class="headerlink" title="1.空值引发的数据倾斜"></a>1.空值引发的数据倾斜</h4><p>​        实际业务中有些大量的null值或者一些无意义的数据参与到计算作业中，表中有大量的null值，如果表之间进行join操作，就会有shuffle产生，这样所有的null值都会被分配到一个reduce中，必然产生数据倾斜。</p>
+<p>解决方案：</p>
+<p>· 可以直接不让null值参与join操作，即不让null值有shuffle阶段<br>· 那么我偶们可以给null值随机赋值，这样他们的hash结果就不一样，就会进到不同的reduce中；</p>
+<h4 id="2-不同数据类型引发的数据倾斜"><a href="#2-不同数据类型引发的数据倾斜" class="headerlink" title="2.不同数据类型引发的数据倾斜"></a>2.不同数据类型引发的数据倾斜</h4><p>​        对于两个表join，表a中需要join的字段key为int，表b中字段既有string类型也有int类型。当按照key进行两个表的join擦操作时，默认的Hash操作会按int型的id来进行分配，而所有string类型都被分配成一个id，结果就是所有的string类型的字段进入到一个reduce中 ，引发数据倾斜。</p>
+<p>解决方案：</p>
+<p>· 我们直接把int类型都转为string就好了，这样key字段都为string，hash时就按照string类型分配了。</p>
+<h4 id="3-数据膨胀引发的数据倾斜"><a href="#3-数据膨胀引发的数据倾斜" class="headerlink" title="3.数据膨胀引发的数据倾斜"></a>3.数据膨胀引发的数据倾斜</h4><p>在多为聚合计算时，如果进行分组聚合的字段过多，如下：</p>
+<p><code>select a, b, c, count(1) from log group by a, b, c with rollup;</code></p>
+<p>解决方案：</p>
+<p>· 可以拆分上面的sql，将with rollup拆分如下几个sql</p>
+<h4 id="4-表连接时引发的数据倾斜"><a href="#4-表连接时引发的数据倾斜" class="headerlink" title="4.表连接时引发的数据倾斜"></a>4.表连接时引发的数据倾斜</h4><p>​        两表进行普通的repartition join时，如果表连接的键存在倾斜，那么在Shuffle阶段必然会引起数据倾斜。</p>
+<p>解决方法： 小表关联大表，mapjoin</p>
+<blockquote>
+<p>  如果想将多个放到map端内存中，秩只需在mapjoin()中写多个表名称即可，用逗号分隔，如将a表和c表放到Map段内存中，则/* +mapjoin(a,c) */</p>
+</blockquote>
+<p>大表关联大表：将关联字段最多的取出来，加盐，再分别join</p>
+<p>参考文案：<a class="link"   target="_blank" rel="noopener" href="https://codingdict.com/article/8150" >图、概念<i class="fas fa-external-link-alt"></i></a><br>                 <a class="link"   target="_blank" rel="noopener" href="https://www.guru99.com/introduction-hive.html" >特性<i class="fas fa-external-link-alt"></i></a><br>                 <a class="link"   target="_blank" rel="noopener" href="http://yulin1995.com/index.php/2020/06/19/hive-%E6%95%B0%E6%8D%AE%E5%80%BE%E6%96%9C/" >长尾效应<i class="fas fa-external-link-alt"></i></a></p>
+
+        </div>
+
+        
+
+        
+            <div class="article-nav">
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2021/11/01/Hadoop%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Hadoop集群搭建</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span>
+              -
+            
+            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Keep Team</a>
+        </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.3</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="fas fa-arrow-up"></i>
+            </li>
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+</main>
+
+
+
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/header-shrink.js"></script>
+
+<script src="/js/back2top.js"></script>
+
+<script src="/js/dark-light-toggle.js"></script>
+
+
+
+
+
+
+
+
+<div class="post-scripts">
+    
+</div>
+
+
+
+</body>
+</html>
