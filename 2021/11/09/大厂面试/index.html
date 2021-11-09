@@ -9,7 +9,7 @@
     
     <title>
         
-            Archive: 2021 |
+            大厂面试 |
         
         Keep Theme
     </title>
@@ -67,7 +67,7 @@
                         </li>
                     
                         <li class="menu-item">
-                            <a class="active"
+                            <a class=""
                                href="/archives"
                             >
                                 ARCHIVES
@@ -95,7 +95,7 @@
                 </li>
             
                 <li class="drawer-menu-item flex-center">
-                    <a class="active"
+                    <a class=""
                        href="/archives">ARCHIVES</a>
                 </li>
             
@@ -115,59 +115,100 @@
 
                 
                     <div class="fade-in-down-animation">
-    <div class="archive-container ">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">大厂面试</span>
+        </div>
+
         
-<div class="archive-list-container">
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.svg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Keep Team</span>
+                        
+                            <span class="author-label">Lv1</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2021-11-09 16:26:10
+    </span>
     
-        <section class="archive-item">
-            <div class="archive-item-header">
-                <span class="archive-year">2021</span>
-                <span class="archive-year-post-count">[5]</span>
-            </div>
-            <ul class="article-list">
-                
-                    <li class="article-item">
-                        <a class="article-title"
-                           href="/2021/11/09/%E5%A4%A7%E5%8E%82%E9%9D%A2%E8%AF%95/"
-                        >大厂面试</a>
-                        <span class="article-date">11-09</span>
-                    </li>
-                
-                    <li class="article-item">
-                        <a class="article-title"
-                           href="/2021/11/03/%E9%9D%A2%E8%AF%95%E9%97%AE%E9%A2%98%E7%AD%94%E6%A1%88%E6%80%BB%E7%BB%93/"
-                        >面试问题答案总结</a>
-                        <span class="article-date">11-03</span>
-                    </li>
-                
-                    <li class="article-item">
-                        <a class="article-title"
-                           href="/2021/11/01/Hive-%E7%9B%B8%E5%85%B3%E6%B5%81%E7%A8%8B/"
-                        >Hive 相关流程</a>
-                        <span class="article-date">11-01</span>
-                    </li>
-                
-                    <li class="article-item">
-                        <a class="article-title"
-                           href="/2021/11/01/Hadoop%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA/"
-                        >Hadoop集群搭建</a>
-                        <span class="article-date">11-01</span>
-                    </li>
-                
-                    <li class="article-item">
-                        <a class="article-title"
-                           href="/2021/10/30/hello-world/"
-                        >Hello World</a>
-                        <span class="article-date">10-30</span>
-                    </li>
-                
-            </ul>
-        </section>
+    
+
+    
+    
+    
     
 </div>
 
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h3 id="3-Hive"><a href="#3-Hive" class="headerlink" title="3 Hive"></a>3 Hive</h3><p>做大数据，Hive SQL也是必问的，大厂的ETL任务很多都是Hive SQL，主要问题如下：</p>
+<ol>
+<li> Hive row_number，rank两个函数的区别</li>
+<li> Hive窗口函数怎么设置窗口大小</li>
+<li> Hive order by,sort by,distribute by,cluster by 区别</li>
+<li> Hive map,reduce数怎么设置</li>
+<li> Hive SQL数据倾斜有哪些原因？怎么优化</li>
+<li> parquet数据格式内部结构了解吗</li>
+<li> Hive数据选择的什么压缩格式</li>
+<li> Hive SQL 如何转化成MR任务的</li>
+<li> Hive 分桶了解吗</li>
+<li> Hive的udf、udaf和udtf了解过吗？自己有没有写过udf</li>
+<li> 怎么验证Hive SQL 的正确性</li>
+<li> lateral view explode关键字来拆分数组</li>
+<li> join操作底层的MapReduce是怎么去执行的</li>
+</ol>
+<p>SQL应用题：</p>
+<ol>
+<li> 一个login_in表，userid、login_time、ip，数据量很大，一个人可能有多条登录数据，取出最近10个登录的用户。</li>
+<li> 还是login_in表，统计登录的总条数( PV )和登录的总人数 (UV)。</li>
+<li>一个用户好友表 userid , follow_list (该用户的好友id数组)<br> A [B, C, D]<br> B [A, C]<br> C [D]<br> 统计这个表有多少对好友</li>
+</ol>
+<p>感言：这个主要考察你平时写SQL多不多，数仓开发岗会比较在意SQL能力</p>
+<p>推荐阅读：</p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/r0N8LOTmONAgoqFklznhgg" >为什么我们选择 Parquet<i class="fas fa-external-link-alt"></i></a></p>
+
+        </div>
+
+        
+
+        
+            <div class="article-nav">
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2021/11/03/%E9%9D%A2%E8%AF%95%E9%97%AE%E9%A2%98%E7%AD%94%E6%A1%88%E6%80%BB%E7%BB%93/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">面试问题答案总结</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
     </div>
 </div>
+
 
                 
             </div>
@@ -197,6 +238,19 @@
         </div>
     </div>
 
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
     
 
     <div class="right-bottom-side-tools">
